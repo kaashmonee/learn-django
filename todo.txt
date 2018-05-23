@@ -1,0 +1,12 @@
+ Skanda,
+
+ Go through the django, django-rest, python-social-auth, and django-channels tutorials. Also go through this Docker tutorial:
+
+ https://www.lynda.com/Docker-tutorials/Learning-Docker/485649-2.html
+
+ You can log in with your Andrew account. On your first day, I'll be tasking you with adding your name and picture to the privacyassistant.org site like Blair has, then you'll be going through the main repos for the project to get an instance up and running. Are you in Pittsburgh? Getting oriented will be much faster if we can meet face to face.
+
+ Your start date is the 28th, yes.
+
+ Best,
+ Daniel
