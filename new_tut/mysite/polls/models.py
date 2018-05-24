@@ -22,6 +22,8 @@ class Question(models.Model):
 
 class Choice(models.Model):
     # I guess this is how we associate choice with question
+    # When we do this, the Django creates a choice_set for each instance of 
+    # Question so that the all the choices can be associated with it
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     # creates a backend charfield of possible length 200
     choice_text = models.CharField(max_length=200)
