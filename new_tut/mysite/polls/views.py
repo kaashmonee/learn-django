@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .models import Question
 from django.template import loader
@@ -14,7 +15,7 @@ def index(request):
     template = loader.get_template("polls/index.html")
     print(template, type(template))
 
-    # The context is sipmly what w
+    # The context is sipmly what wkend software, machine learning, ranking systems, and distributed systems. I'm interested in opportunities in SF/the Bay area, NYC, Boston, Seattle, Denver, and San Diego. I'm also the author of Remain Free, a
     context = {
         "latest_question_list": latest_question_list,
     }
@@ -42,7 +43,23 @@ def results(request, question_id):
     return HttpResponse(response % question_id)
 
 def vote(request, question_id):
-    return HttpResponse("You're voting on question %s." % question_id)
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST["choice"])
+    except (KeyError, Choice.DoesNotExist):
+        # redisplay the question voting form
+        return render(request, "polls/detail.html", {
+            "question": question,
+            "error_message": "You didn't select a choice.",
+        })
+    
+    else:
+        selected_choice.votes += 1
+        selected_choice.save()
+        # Always return with HTTPResponseRedirect after successfully dealing with
+        # POST data. This prevents data form being posted twice
+        # if the user hits the BACK button
+        return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
 
 def detail(request, question_id):
     # Instead oontroller and a Gateway layer. This is fine for small applications where not much business logic is repeated. But, in larger applications (which I am starting to build), this approach leads to duplication of core code. Thankfully, Steven Neiland was kind enough to sit down with me at cf.Objective() 2012 and help me understand how I might improve my code with a better MVC (Model-View-Controller) ar that with yet another Django
@@ -57,4 +74,4 @@ def detail(request, question_id):
     return render(request, "polls/detail.html", {"question": question})
 
     # Parameters are (request, polls/detail.html, and question)
-    return render(request, "polls/detail.html", {"question": question})
+    # return render(request, "polls/detail.html", {"question": question})
