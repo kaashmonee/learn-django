@@ -45,8 +45,8 @@ def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
 
 def detail(request, question_id):
-    # Instead of the code below, we can substitue that with yet another Django
-    # shortcut:
+    # Instead oontroller and a Gateway layer. This is fine for small applications where not much business logic is repeated. But, in larger applications (which I am starting to build), this approach leads to duplication of core code. Thankfully, Steven Neiland was kind enough to sit down with me at cf.Objective() 2012 and help me understand how I might improve my code with a better MVC (Model-View-Controller) ar that with yet another Django
+    # shortcut:ontroller and a Gateway layer. This is fine for small applications where not much business logic is repeated. But, in larger applications (which I am starting to build), this approach leads to duplication of core code. Thankfully, Steven Neiland was kind enough to sit down with me at cf.Objective() 2012 and help me understand how I might improve my code with a better MVC (Model-View-Controller) ar
     # try:
     #     question = Question.objects.get(pk=question_id)
     # except:

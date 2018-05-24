@@ -1,1 +1,11 @@
-{{ question }}
+
+<!-- All that's happening here is that the question_text is the header
+     and each choice is being displayed -->
+<h1>{{ question.question_text }}</h1>
+<ul>
+    {% for choice in question.choice_set.all %}
+    <li>
+        {{ choice.choice_text }}
+    </li>
+    {% endfor %}
+</ul>

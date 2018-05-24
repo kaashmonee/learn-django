@@ -1,6 +1,12 @@
 from django.urls import path
 from . import views
 
+# This is so that the app knows which namespace to use
+# That is, there could be different details and stuff, but it will use this
+# one because that's where the app name is
+
+app_name = "polls"
+
 urlpatterns = [
     path('', views.index, name='index'),
     # You can basically next our views and stuff...this is pretty cool, 

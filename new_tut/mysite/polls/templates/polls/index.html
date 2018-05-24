@@ -1,7 +1,14 @@
 {% if latest_question_list %}
     <ul>
         {% for question in latest_question_list %}
-            <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+            <!-- Gets the URL -->
+            <!-- Not entirely sure what this line here is doing...we'll come
+                back to it -->
+            <!-- This is the controller part of the app...I think -->
+            <!-- However, this is defined in the polls/urls.py file -->
+            <!-- The polls comes from the fact that we intialized the app name
+                in urls.py to be app_name="polls" -->
+            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
         {% endfor %}
     </ul>
 
