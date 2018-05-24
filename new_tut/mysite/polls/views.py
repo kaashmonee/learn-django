@@ -45,10 +45,16 @@ def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
 
 def detail(request, question_id):
-    try:
-        question = Question.objects.get(pk=question_id)
-    except:
-        raise Http404("Question does not exist")
+    # Instead of the code below, we can substitue that with yet another Django
+    # shortcut:
+    # try:
+    #     question = Question.objects.get(pk=question_id)
+    # except:
+    #     raise Http404("Question does not exist")
+
+    # DJANGO SHORTCUT
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, "polls/detail.html", {"question": question})
 
     # Parameters are (request, polls/detail.html, and question)
     return render(request, "polls/detail.html", {"question": question})
