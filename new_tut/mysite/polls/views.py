@@ -5,6 +5,8 @@ from django.template import loader
 
 # Create your views here.
 
+# What is the second parameter for each of these?
+
 def index(request):
     latest_question_list = Question.objects.order_by("-pub_date")[:5]
     # We don't have to look in the templates directory because django does 
@@ -41,3 +43,12 @@ def results(request, question_id):
 
 def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
+
+def detail(request, question_id):
+    try:
+        question = Question.objects.get(pk=question_id)
+    except:
+        raise Http404("Question does not exist")
+
+    # Parameters are (request, polls/detail.html, and question)
+    return render(request, "polls/detail.html", {"question": question})
