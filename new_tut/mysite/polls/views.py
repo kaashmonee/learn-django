@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
 from django.urls import reverse
 from .models import Question
+from django.utils import timezone
 from django.template import loader
 
 # Create your views here.
@@ -28,7 +29,13 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         # Returns the last 5 published questions
-        return Question.objects.order_by("-pub_date")[:5]
+        # return Question.objects.order_by("-pub_date")[:5]
+
+        # Returns queryset containing questionswhose pub_date is less than or 
+        # equal to timezone.now
+        return Question.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by("-pub_date")[:5]
 
     # this creates an http response, and renders the context in which we are
     # responding with and the request itselfand how this happened, and how they printed a signup URL, before wondering if this was the right thing to do. Still
@@ -69,7 +76,15 @@ class ResultsView(generic.DetailView):
 # is only altered via a POST call.
 
 # request.POST['choice'] will raise KeyError if choice wasn’t provided in POST data. 
-# The above code checks for KeyError and redisplays the question form with an error message 
+# The above code checks for KeyError and redisplays the Return the last five published questions."""
+        return Question.objects.order_by('-pub_date')[:5]
+
+
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = 'polls/detail.html'
+
+uestion form with an error message 
 # if choice isn’t given.
 # and how this happened, and how they printed a signup URL, before wondering if this was the right thing to do. Still
 # After incrementing the choice count, the code returns an HttpResponseRedirect 
