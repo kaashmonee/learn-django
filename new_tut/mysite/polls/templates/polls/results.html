@@ -2,6 +2,7 @@
 
 <ul>
     {% for choice in question.choice_set.all %}
+        <!-- I am pretty lost as to what this line here does...bit of a mystery -->
         <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li> 
     {% endfor %}
 </ul>

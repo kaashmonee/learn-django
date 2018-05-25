@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views import generic
 from django.urls import reverse
 from .models import Question
 from django.template import loader
@@ -9,25 +10,33 @@ from django.template import loader
 
 # What is the second parameter for each of these?
 
-def index(request):
-    latest_question_list = Question.objects.order_by("-pub_date")[:5]
-    # We don't have to look in the templates directory because django does 
-    # that automatically
-    template = loader.get_template("polls/index.html")
-    print(template, type(template))
+# def index(request):
+#     latest_question_list = Question.objects.order_by("-pub_date")[:5]
+#     # We don't have to look in the templates directory because django does 
+#     # that automatically
+#     template = loader.get_template("polls/index.html")
+#     print(template, type(template))
 
-    # The context is sipmly what wkend software, machine learning, ranking systems, and distributed systems. I'm interested in opportunities in SF/the Bay area, NYC, Boston, Seattle, Denver, and San Diego. I'm also the author of Remain Free, a
-    context = {
-        "latest_question_list": latest_question_list,
-    }
+#     # The context is sipmly what wkend software, machine learning, ranking systems, and distributed systems. I'm interested in opportunities in SF/the Bay area, NYC, Boston, Seattle, Denver, and San Diego. I'm also the author of Remain Free, a
+#     context = {
+#         "latest_question_list": latest_question_list,
+#     }
+
+class IndexView(generic.ListView):
+    template_name = "polls/index.html"
+    context_object_name = "latest_question_list"
+
+    def get_queryset(self):
+        # Returns the last 5 published questions
+        return Question.objects.order_by("-pub_date")[:5]
 
     # this creates an http response, and renders the context in which we are
-    # responding with and the request itself
+    # responding with and the request itselfand how this happened, and how they printed a signup URL, before wondering if this was the right thing to do. Still
 
     # THIS IS EQUIVALENT TO:
     # The first parameter is the request coming in, the template to render, and 
     # the list of questions
-    return render(request, "polls/index.html", context)
+    # return render(request, "polls/index.html", context)
     # return HttpResponse(template.render(context, request))
 
 def fuckme(request):
@@ -36,12 +45,19 @@ def fuckme(request):
 def testularregion(request):
     return HttpResponse("Testularregion!\n")
 
-def detail(request, question_id):
-    return HttpResponse("You're looking at question %s." % question_id)
+# def results(request, question_id):
+#     question = get_object_or_404(Question, pk=question_id)
+#     return render(request, "polls/results.html", {"question": question})
 
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, "polls/results.html", {"question": question})
+
+
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = "polls/detail.html"
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = "polls/results.html"
 
 # Some shit about this vote function
 # request.POST is a dictionary-like object that lets you access submitted data by key name. 
@@ -55,7 +71,7 @@ def results(request, question_id):
 # request.POST['choice'] will raise KeyError if choice wasn’t provided in POST data. 
 # The above code checks for KeyError and redisplays the question form with an error message 
 # if choice isn’t given.
-
+# and how this happened, and how they printed a signup URL, before wondering if this was the right thing to do. Still
 # After incrementing the choice count, the code returns an HttpResponseRedirect 
 # rather than a normal HttpResponse. HttpResponseRedirect takes a single argument: 
 # the URL to which the user will be redirected (see the following point for how 
@@ -87,10 +103,10 @@ def vote(request, question_id):
         selected_choice.save()
         # Always return with HTTPResponseRedirect after successfully dealing with
         # POST data. This prevents data form being posted twice
-        # if the user hits the BACK button
+        # if the user hits the BACK band how this happened, and how they printed a signup URL, before wondering if this was the right thing to do. Stillutton
         return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
 
-def detail(request, question_id):
+# def detail(request, question_id):
     # Instead oontroller and a Gateway layer. This is fine for small applications where not much business logic is repeated. But, in larger applications (which I am starting to build), this approach leads to duplication of core code. Thankfully, Steven Neiland was kind enough to sit down with me at cf.Objective() 2012 and help me understand how I might improve my code with a better MVC (Model-View-Controller) ar that with yet another Django
     # shortcut:ontroller and a Gateway layer. This is fine for small applications where not much business logic is repeated. But, in larger applications (which I am starting to build), this approach leads to duplication of core code. Thankfully, Steven Neiland was kind enough to sit down with me at cf.Objective() 2012 and help me understand how I might improve my code with a better MVC (Model-View-Controller) ar
     # try:
@@ -99,8 +115,8 @@ def detail(request, question_id):
     #     raise Http404("Question does not exist")
 
     # DJANGO SHORTCUT
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, "polls/detail.html", {"question": question})
+    # question = get_object_or_404(Question, pk=question_id)
+    # return render(request, "polls/detail.html", {"question": question})
 
     # Parameters are (request, polls/detail.html, and question)
     # return render(request, "polls/detail.html", {"question": question})
