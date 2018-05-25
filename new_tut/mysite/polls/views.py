@@ -76,19 +76,19 @@ class ResultsView(generic.DetailView):
 # request.POST values are always strings.
 
 # Note that Django also provides request.GET for accessing GET data in the same 
-# way – but we’re explicitly using request.POST in our code, to ensure that data 
+# way – but we’re exrplicitly using request.POST in our code, to ensure that data 
 # is only altered via a POST call.
 
 # request.POST['choice'] will raise KeyError if choice wasn’t provided in POST data. 
 # The above code checks for KeyError and redisplays the Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+        # return Question.objects.order_by('-pub_date')[:5]
 
 
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
 
-uestion form with an error message 
+# uestion form with an error message 
 # if choice isn’t given.
 # and how this happened, and how they printed a signup URL, before wondering if this was the right thing to do. Still
 # After incrementing the choice count, the code returns an HttpResponseRedirect 
