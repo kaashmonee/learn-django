@@ -1,9 +1,0 @@
--each field -- represented by instance of field class 
-    eg. charfield, datetime field, etc.
-    machine friendly format
-
-
-3 step process to making model changes
-    -change models in models.py
-    - python amange.py makemigrations for those changes
-    - python manage.py migrate to apply those changes to database
