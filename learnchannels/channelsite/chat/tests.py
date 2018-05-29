@@ -45,7 +45,7 @@ class ChatTests(ChannelsLiveServerTestCase):
         finally:
             self._close_all_new_windows()
 
-    def test_when_chat_messaage_posted_then_not_seen_by_anyone_in_different_room(self):
+    def test_when_chat_message_posted_then_not_seen_by_anyone_in_different_room(self):
         try:
             # enters chat room
             self._enter_chat_room("room_1")
@@ -57,14 +57,17 @@ class ChatTests(ChannelsLiveServerTestCase):
             # posts hello message
             self._post_message("hello")
 
-
+            # waits 2 seconds, or until this is finished, i think
+            # if it goes over 2 seconds, it throws an exception
             WebDriverWait(self.driver, 2).until(lambda _:
                 "hello" in self._chat_log_value,
                 "Message was not received by window 1 from window 1")
 
+
             self._switch_to_window(1)
             self._post_message("world")
 
+            # Makes sure that this happens, otherwise throws an exception
             WebDriverWait(self.driver, 2).until(lambda _:
                 "world" in self._chat_log_value,
                 "Message was not received by window 2 from window 2")
@@ -78,6 +81,7 @@ class ChatTests(ChannelsLiveServerTestCase):
             self._close_all_new_windows()
 
     # === Utility ===
+    # These are the functions that we are calling above
     def _enter_chat_room(self, room_name):
         self.driver.get(self.live_erver_url + "/chat/")
         ActionChains(self.driver).send_keys(room_name + "\n").perform()
@@ -95,12 +99,12 @@ class ChatTests(ChannelsLiveServerTestCase):
         if len(self.driver.window_handles) == 1:
             self.driver.switch_to_window(self.driver.window_handles[0])
         
-        def _switch_to_window(self, window_index):
-            self.driver.switch_to_window(self.driver.window_handles[window_index])
+    def _switch_to_window(self, window_index):
+        self.driver.switch_to_window(self.driver.window_handles[window_index])
 
-        def _post_message(self, message):
-            ActionChains(self.driver).send_keys(message + "\n").perform()
+    def _post_message(self, message):
+        ActionChains(self.driver).send_keys(message + "\n").perform()
 
-        @property
-        def _chat_log_value(self):
-            return self.driver.find_element_by_css("#chat-log").get_property("value")
+    @property
+    def _chat_log_value(self):
+        return self.driver.find_element_by_css("#chat-log").get_property("value")
