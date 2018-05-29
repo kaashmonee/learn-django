@@ -5,6 +5,8 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
 
+# This is just the "consumer" class, which means they are the ones who are doing
+# the communicating through the socket
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
         # Obtains the room name parameter from the URL in chat/routes.py, which
@@ -46,6 +48,7 @@ class ChatConsumer(WebsocketConsumer):
         message = text_data_json["message"]
 
         # send message to room group
+        print("group_send type:", type(self.channel_layer.group_send))
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
