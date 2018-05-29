@@ -19,6 +19,6 @@ import authentication.views as views
 
 urlpatterns = [
     path(r'^admin/',admin.site.urls),
-    path('^api/v1/', include('social_django.urls', namespace='social')),
-    path('', views.index),
+    path('', include('social_django.urls', namespace='social')),
+    path('', views.index)
 ]
