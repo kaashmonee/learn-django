@@ -1,4 +1,10 @@
 # chat/tests.py
+
+# TODO: tests are failing...i'm getting a   File "/home/skanda/.virtualenvs/django-env/lib/python3.5/site-packages/channels/testing/live.py", line 33, in _pre_setup
+    # "ChannelLiveServerTestCase can not be used with in memory databases"
+# django.core.exceptions.ImproperlyConfigured: ChannelLiveServerTestCase can not be used with in memory database
+# error and I'm not sure how to fix it at the moment. Moving onto the next task
+
 from channels.testing import ChannelsLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
