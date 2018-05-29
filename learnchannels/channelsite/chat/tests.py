@@ -78,6 +78,7 @@ class ChatTests(ChannelsLiveServerTestCase):
             self._close_all_new_windows()
 
     # === Utility ===
+    # small change
     def _enter_chat_room(self, room_name):
         self.driver.get(self.live_erver_url + "/chat/")
         ActionChains(self.driver).send_keys(room_name + "\n").perform()
